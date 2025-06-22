@@ -1,0 +1,59 @@
+# --- Tipos de Dados ---
+
+enum PhoneType {
+  PHONE_TYPE_MOBILE
+  PHONE_TYPE_FIXED
+  PHONE_TYPE_COMERCIAL
+}
+
+enum PhoneCategory {
+  CATEGORY_FAMILY
+  CATEGORY_PERSONAL
+  CATEGORY_COMERCIAL
+}
+
+type Telephone {
+  number: String!
+  phone_type: PhoneType
+}
+
+type Contact {
+  id: Int!
+  name: String!
+  telephones: [Telephone!]!
+  category: PhoneCategory!
+}
+
+# --- Input Types para Mutações ---
+
+input TelephoneInput {
+  number: String!
+  phone_type: PhoneType!
+}
+
+input AddContactInput {
+  id: Int!
+  name: String!
+  telephones: [TelephoneInput!]!
+  category: PhoneCategory!
+}
+
+# --- Queries (Buscas de Dados) ---
+
+type Query {
+  contact(id: Int!): Contact
+  contacts: [Contact!]!
+}
+
+# --- Mutations (Alterações de Dados) ---
+
+type Mutation {
+  addContact(input: AddContactInput!): AddContactResponse!
+}
+
+# --- Respostas de Mutação ---
+
+type AddContactResponse {
+  message: String!
+  contact: Contact
+}
